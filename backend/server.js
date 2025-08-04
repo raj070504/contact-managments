@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-
+require('dotenv').config();
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
@@ -33,10 +33,10 @@ const upload = multer({ storage: storage });
 app.use('/uploads', express.static('uploads'));
 
 const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '900520',
-  database: 'contacts', 
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '900520',
+  database: process.env.DB_NAME || 'contacts',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
